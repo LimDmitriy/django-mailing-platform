@@ -1,0 +1,28 @@
+{% extends 'mailings/base.html' %}
+
+{% block page_title %}Удалить сообщение{% endblock %}
+{% block page_description %}Подтверждение удаления сообщения{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-6 offset-md-3">
+            <form method="post">
+                <div class="card shadow-sm">
+                    <div class="card-body">
+                        {% csrf_token %}
+                        <p class="card-text">
+                            Вы действительно хотите удалить подписчика 
+                            <strong>{{ message.subject }} ({{ message.content }})</strong>?
+                        </p>
+                        <div class="d-flex justify-content-between">
+                            <button type="submit" class="btn btn-danger">Удалить</button>
+                            <a class="btn btn-secondary" href="{% url 'mailings:message_list' %}">Отменить</a>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

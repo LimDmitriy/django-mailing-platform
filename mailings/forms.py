@@ -1,6 +1,6 @@
 from django import forms
 
-from mailings.models import Subscriber
+from mailings.models import Subscriber, Message
 
 
 class SubscriberForm(forms.ModelForm):
@@ -19,4 +19,19 @@ class SubscriberForm(forms.ModelForm):
         )
         self.fields["comment"].widget.attrs.update(
             {"class": "form-control", "placeholder": "Напишите комментарий"}
+        )
+
+
+class MessageForm(forms.ModelForm):
+    model = Message
+    fields = ["subject", "content"]
+
+    def __init__(self, *args, **kwargs):
+        super(MessageForm, self).__init__(*args, **kwargs)
+
+        self.fields["subject"].widget.attrs.update(
+            {"class": "form-control", "placeholder": "Введите тему письма"}
+        )
+        self.fields["content"].widget.attrs.update(
+            {"class": "form-control", "placeholder": "Введите сообщение"}
         )

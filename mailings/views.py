@@ -1,6 +1,6 @@
 from django.urls import reverse_lazy
 
-from .models import Subscriber
+from .models import Subscriber, Message
 from django.views.generic import ListView, CreateView, DetailView, UpdateView, DeleteView
 
 class SubscriberListView(ListView):
@@ -34,3 +34,33 @@ class SubscriberDeleteView(DeleteView):
 	template_name = "mailings/subscriber_confirm_delete.html"
 	success_url = reverse_lazy("mailings:subscriber_list")
 
+
+class MessageListView(ListView):
+	model = Message
+	template_name = "mailings/message_list.html"
+	context_object_name = "messages"
+
+
+class MessageCreateView(CreateView):
+	model = Message
+	template_name = "mailings/message_form.html"
+	fields = ("subject", "content")
+	success_url = reverse_lazy("mailings:message_list")
+
+
+class MessageDetailView(DetailView):
+	model = Message
+	template_name = "mailings/message_detail.html"
+	context_object_name = "message"
+
+class MessageUpdateView(UpdateView):
+	model = Message
+	fields = ("subject", "content")
+	template_name = "mailings/message_form.html"
+	success_url = reverse_lazy("mailings:message_list")
+
+
+class MessageDeleteView(DeleteView):
+	model = Message
+	template_name = "mailings/message_confirm_delete.html"
+	success_url = reverse_lazy("mailings:message_list")
