@@ -1,10 +1,22 @@
 from django.contrib import messages
-from django.shortcuts import get_object_or_404, redirect
+from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse_lazy
 from .services import send_email
 
 from .models import Subscriber, Message, Mailing
 from django.views.generic import ListView, CreateView, DetailView, UpdateView, DeleteView
+
+class HomeView(ListView):
+    model = Mailing
+    template_name = "mailings/home.html"
+    context_object_name = "mailings"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['total_mailings'] = Mailing.objects.count()
+        context['active_mailings'] = Mailing.objects.filter(status='running').count()
+        context['unique_subscribers'] = Subscriber.objects.filter(mailings__isnull=False).distinct().count()
+        return context
 
 class SubscriberListView(ListView):
 	model = Subscriber

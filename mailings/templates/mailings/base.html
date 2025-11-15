@@ -1,31 +1,82 @@
 {% load static %}
 <!doctype html>
-<html lang="en">
+<html lang="ru">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>{% block title %}Mailing Service{% endblock %}</title>
+
+
     <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
 
     <style>
         body {
-            background-color: #f0f8ff;
+            background-color: #f8f9fa;
         }
+
+        header {
+            background-color: #007bff;
+        }
+
+        header .navbar-brand, header .nav-link {
+            color: white;
+        }
+
+        header .nav-link:hover {
+            color: #ffc107;
+        }
+
         footer {
             background-color: #007bff;
         }
+
         footer a {
             text-decoration: none;
+        }
+
+        .card {
+            transition: transform 0.2s;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
         }
     </style>
 </head>
 <body class="d-flex flex-column min-vh-100">
 
+
     <header>
-       {% include "mailings/includes/inc_menu.html" %}
-
-
+        <nav class="navbar navbar-expand-lg navbar-dark py-3">
+            <div class="container">
+                <a class="navbar-brand fw-bold" href="{% url 'mailings:home' %}">Mailing Service</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item">
+                            <a class="nav-link {% if request.resolver_match.url_name == 'home' %}active{% endif %}"
+                               href="{% url 'mailings:home' %}">Главная</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link {% if request.resolver_match.url_name == 'subscriber_list' %}active{% endif %}"
+                               href="{% url 'mailings:subscriber_list' %}">Подписчики</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link {% if request.resolver_match.url_name == 'mailing_list' %}active{% endif %}"
+                               href="{% url 'mailings:mailing_list' %}">Рассылки</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link {% if request.resolver_match.url_name == 'message_list' %}active{% endif %}"
+                               href="{% url 'mailings:message_list' %}">Сообщения</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
     </header>
 
     <main class="flex-fill">
@@ -63,10 +114,7 @@
                     </a>
                 </li>
             </ul>
-            <p class="mb-0 text-white"><a href="{% url 'mailings:subscriber_list' %}" class="text-white">Список подписчиков</a></p>
-            <p class="mb-0 text-white"><a href="{% url 'mailings:mailing_list' %}" class="text-white">Список рассылок</a></p>
-            <p class="mb-0 text-white"><a href="{% url 'mailings:message_list' %}" class="text-white">Список сообщений</a></p>
-            <p class="mb-1 text-white">Mailing Service © 2025. Все права защищены.</p>
+            <p class="mb-0 text-white">Mailing Service © 2025. Все права защищены.</p>
         </div>
     </footer>
 
