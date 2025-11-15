@@ -1,0 +1,49 @@
+{% extends 'mailings/base.html' %}
+
+{% block page_title %}Рассылка №{{ mailing.id }}{% endblock %}
+{% block page_description %}Информация о рассылке{% endblock %}
+
+{% block content %}
+<div class="album py-5 bg-light">
+    <div class="container d-flex justify-content-center">
+        <div class="row" style="max-width: 800px; width: 100%;">
+            <div class="col">
+                <div class="card shadow-sm">
+                    <div class="card-body">
+                        <h3 class="card-title text-center">Статус: {{ mailing.status }} </h3>
+                        <p class="card-text">
+                            <strong>Дата и время первой отправки:</strong> {{ mailing.start_time|date:"d.m.Y H:i" }}
+                        </p>
+                        <p class="card-text">
+                            <strong>Дата и время окончания:</strong> {{ mailing.end_time|date:"d.m.Y H:i" }}
+                        </p>
+                        <p class="card-text">
+                            <strong>Сообщение:</strong> {{ mailing.message }}
+                        </p>
+                        <p class="card-text">
+                            <strong>Получатели:</strong>
+                            <ul>
+                                {% for subscriber in mailing.subscribers.all %}
+                                    <li>{{ subscriber }}</li>
+                                {% empty %}
+                                    <li>Нет получателей</li>
+                                {% endfor %}
+                            </ul>
+                        </p>
+
+                        <div class="d-flex justify-content-between align-items-center mt-3">
+                            <div class="btn-group">
+                                <a href="{% url 'mailings:mailing_send' mailing.pk %}" class="btn btn-success">Отправить рассылку</a>
+                                <a class="btn btn-primary" href="{% url 'mailings:mailing_list' %}" role="button">Назад</a>
+                                <a class="btn btn-secondary" href="{% url 'mailings:mailing_update' mailing.pk %}" role="button">Редактировать</a>
+                                <a class="btn btn-danger" href="{% url 'mailings:mailing_delete' mailing.pk %}" role="button">Удалить</a>
+                            </div>
+                            <small class="text-muted">ID: {{ mailing.pk }}</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

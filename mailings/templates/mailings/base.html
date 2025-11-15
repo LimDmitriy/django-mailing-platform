@@ -1,0 +1,75 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% block title %}Mailing Service{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+
+    <style>
+        body {
+            background-color: #f0f8ff;
+        }
+        footer {
+            background-color: #007bff;
+        }
+        footer a {
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body class="d-flex flex-column min-vh-100">
+
+    <header>
+       {% include "mailings/includes/inc_menu.html" %}
+
+
+    </header>
+
+    <main class="flex-fill">
+        <section class="py-5 text-center container">
+            <div class="row py-lg-5">
+                <div class="col-lg-6 col-md-8 mx-auto">
+                    <h1 class="fw-light">{% block page_title %}Mailing Service{% endblock %}</h1>
+                    <p class="lead text-muted">{% block page_description %}Управляйте подписчиками и рассылками легко{% endblock %}</p>
+                </div>
+            </div>
+        </section>
+
+        <div class="container">
+            {% block content %}
+            {% endblock %}
+        </div>
+    </main>
+
+    <footer class="text-white py-4 mt-auto">
+        <div class="container text-center">
+            <ul class="list-unstyled d-flex justify-content-center mb-3">
+                <li class="mx-2">
+                    <a href="https://t.me/dima__lim" target="_blank" class="text-white">
+                        <i class="bi bi-telegram"></i>
+                    </a>
+                </li>
+                <li class="mx-2">
+                    <a href="https://www.instagram.com/dima__lim" target="_blank" class="text-white">
+                        <i class="bi bi-instagram"></i>
+                    </a>
+                </li>
+                <li class="mx-2">
+                    <a href="#" target="_blank" class="text-white">
+                        <i class="bi bi-facebook"></i>
+                    </a>
+                </li>
+            </ul>
+            <p class="mb-0 text-white"><a href="{% url 'mailings:subscriber_list' %}" class="text-white">Список подписчиков</a></p>
+            <p class="mb-0 text-white"><a href="{% url 'mailings:mailing_list' %}" class="text-white">Список рассылок</a></p>
+            <p class="mb-0 text-white"><a href="{% url 'mailings:message_list' %}" class="text-white">Список сообщений</a></p>
+            <p class="mb-1 text-white">Mailing Service © 2025. Все права защищены.</p>
+        </div>
+    </footer>
+
+    <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+</body>
+</html>
