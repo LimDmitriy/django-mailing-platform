@@ -1,3 +1,4 @@
+from django.utils import timezone
 from django.db import models
 from django.db.models import CASCADE
 
@@ -85,6 +86,21 @@ class Mailing(models.Model):
 	def __str__(self):
 		return f"{self.message.subject} - ({self.status})"
 
+	def update_status(self):
+		now = timezone.now()
+		if self.end_time and now >= self.end_time:
+			self.status = "finished"
+			return
+
+		if self.delivery_statuses.exists():
+			self.status = "running"
+			return
+
+		self.status = "created"
+
+	def save(self, *args, **kwargs):
+		self.update_status()
+		super().save(*args, **kwargs)
 
 class DeliveryStatus(models.Model):
 	STATUS_CHOICES = [

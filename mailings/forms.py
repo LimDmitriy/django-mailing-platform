@@ -1,6 +1,6 @@
 from django import forms
 
-from mailings.models import Subscriber, Message
+from mailings.models import Subscriber, Message, Mailing
 
 
 class SubscriberForm(forms.ModelForm):
@@ -34,4 +34,26 @@ class MessageForm(forms.ModelForm):
         )
         self.fields["content"].widget.attrs.update(
             {"class": "form-control", "placeholder": "Введите сообщение"}
+        )
+
+
+class MailingForm(forms.ModelForm):
+    class Meta:
+        model = Mailing
+        fields = ["start_time", "end_time", "message", "subscribers"]
+
+    def __init__(self, *args, **kwargs):
+        super(MessageForm, self).__init__(*args, **kwargs)
+
+        self.fields["start_time"].widget.attrs.update(
+            {"class": "form-control", "placeholder": "Введите дату начал рассылки "}
+        )
+        self.fields["end_time"].widget.attrs.update(
+            {"class": "form-control", "placeholder": "Введите дату окончания рассылки"}
+        )
+        self.fields["message"].widget.attrs.update(
+            {"class": "form-control"}
+        )
+        self.fields["subscribers"].widget.attrs.update(
+            {"class": "form-control"}
         )
