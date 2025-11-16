@@ -1,0 +1,23 @@
+{% extends "mailings/base.html" %}
+
+{% block page_title %}Выход{% endblock %}
+{% block page_description %}Подтверждение выхода{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center mt-4">
+    <div class="col-md-6 col-lg-4">
+        <div class="card shadow-sm">
+            <div class="card-body text-center">
+                <h4 class="mb-3">Вы действительно хотите выйти?</h4>
+
+                <form method="post" action="{% url 'account_logout' %}">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-danger w-100">Выйти</button>
+                </form>
+
+                <a class="d-block mt-3" href="/">Отмена</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
