@@ -18,7 +18,7 @@ from .views import (
     MailingDeleteView,
     send_mail_view,
     HomeView,
-    user_mailings_stats,
+    MailingStatsView,
 )
 
 app_name = MailingsConfig.name
@@ -67,5 +67,5 @@ urlpatterns = [
         "mailing/<int:pk>/delete/", MailingDeleteView.as_view(), name="mailing_delete"
     ),
     path("mailing/<int:pk>/send/", send_mail_view, name="mailing_send"),
-    path("my-mailings/", user_mailings_stats, name="user_mailings_stats"),
+    path("my-mailings/", MailingStatsView.as_view(), name="user_mailings_stats"),
 ]

@@ -37,6 +37,7 @@
                                 <a class="btn btn-primary" href="{% url 'mailings:mailing_list' %}" role="button">Назад</a>
                                 <a class="btn btn-secondary" href="{% url 'mailings:mailing_update' mailing.pk %}" role="button">Редактировать</a>
                                 <a class="btn btn-danger" href="{% url 'mailings:mailing_delete' mailing.pk %}" role="button">Удалить</a>
+                                <a class="btn btn-danger" href="{% url 'mailings:user_mailings_stats' %}">Статистика</a>
                             </div>
                             <small class="text-muted">ID: {{ mailing.pk }}</small>
                         </div>

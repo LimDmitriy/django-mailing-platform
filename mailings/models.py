@@ -5,6 +5,11 @@ from django.conf import settings
 
 
 class Subscriber(models.Model):
+    owner = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+        related_name="subscribers"
+    )
     email = models.EmailField(verbose_name="Почта", unique=True)
     fullname = models.CharField(max_length=150, verbose_name="Ф.И.О.")
     comment = models.TextField(verbose_name="Комментарий", blank=True, null=True)
@@ -48,6 +53,11 @@ class Mailing(models.Model):
         ("running", "Запущена"),
         ("finished", "Завершена"),
     ]
+    owner = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+        related_name="mailings"
+    )
     start_time = models.DateTimeField(verbose_name="Дата начала рассылки")
     end_time = models.DateTimeField(
         verbose_name="Дата окончания рассылки", blank=True, null=True
@@ -74,11 +84,17 @@ class Mailing(models.Model):
         ordering = [
             "status",
         ]
+        permissions = [
+            ("can_view_statistics", "Can view statistics")
+        ]
 
     def __str__(self):
         return f"{self.message.subject} - ({self.status})"
 
     def update_status(self):
+        if not self.pk:
+            return
+
         now = timezone.now()
         if self.end_time and now >= self.end_time:
             self.status = "finished"

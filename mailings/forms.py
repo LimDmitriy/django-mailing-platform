@@ -53,3 +53,4 @@ class MailingForm(forms.ModelForm):
         )
         self.fields["message"].widget.attrs.update({"class": "form-control"})
         self.fields["subscribers"].widget.attrs.update({"class": "form-control"})
+
