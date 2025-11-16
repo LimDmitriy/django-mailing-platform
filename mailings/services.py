@@ -2,6 +2,7 @@ import os
 from django.core.mail import send_mail
 from mailings.models import Mailing, DeliveryStatus
 
+
 def send_email(mailing: Mailing):
     """
     Отправка письма всем подписчикам рассылки с логированием попыток.
@@ -13,18 +14,14 @@ def send_email(mailing: Mailing):
                 message=mailing.message.content,
                 from_email=os.getenv("EMAIL_HOST"),
                 recipient_list=[subscriber.email],
-                fail_silently=False
+                fail_silently=False,
             )
             DeliveryStatus.objects.create(
-                mailing=mailing,
-                status="success",
-                server_response="OK"
+                mailing=mailing, status="success", server_response="OK"
             )
         except Exception as e:
             DeliveryStatus.objects.create(
-                mailing=mailing,
-                status="failed",
-                server_response=str(e)
+                mailing=mailing, status="failed", server_response=str(e)
             )
 
     mailing.save()

@@ -1,17 +1,20 @@
 from django.contrib import admin
 from .models import Mailing, Message, Subscriber, DeliveryStatus
 
+
 @admin.register(Subscriber)
 class SubscriberAdmin(admin.ModelAdmin):
-	list_display = ("fullname", "email", "comment")
-	search_fields = ("fullname", "email")
-	ordering = ("fullname",)
+    list_display = ("fullname", "email", "comment")
+    search_fields = ("fullname", "email")
+    ordering = ("fullname",)
+
 
 @admin.register(Message)
 class MessageAdmin(admin.ModelAdmin):
     list_display = ("subject",)
     search_fields = ("subject",)
     ordering = ("subject",)
+
 
 @admin.register(Mailing)
 class MailingAdmin(admin.ModelAdmin):

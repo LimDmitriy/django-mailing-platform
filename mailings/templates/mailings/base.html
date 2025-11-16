@@ -73,6 +73,10 @@
                         <a class="nav-link {% if request.resolver_match.url_name == 'message_list' %}active{% endif %}"
                            href="{% url 'mailings:message_list' %}">Сообщения</a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link {% if request.resolver_match.url_name == 'message_list' %}active{% endif %}"
+                           href="{% url 'mailings:user_mailings_stats' %}">Статистика</a>
+                    </li>
 
                     {% if user.is_authenticated %}
                         <li class="nav-item">

@@ -51,9 +51,5 @@ class MailingForm(forms.ModelForm):
         self.fields["end_time"].widget.attrs.update(
             {"class": "form-control", "placeholder": "Введите дату окончания рассылки"}
         )
-        self.fields["message"].widget.attrs.update(
-            {"class": "form-control"}
-        )
-        self.fields["subscribers"].widget.attrs.update(
-            {"class": "form-control"}
-        )
+        self.fields["message"].widget.attrs.update({"class": "form-control"})
+        self.fields["subscribers"].widget.attrs.update({"class": "form-control"})
