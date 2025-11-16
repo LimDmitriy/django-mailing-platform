@@ -6,9 +6,7 @@ from django.conf import settings
 
 class Subscriber(models.Model):
     owner = models.ForeignKey(
-        settings.AUTH_USER_MODEL,
-        on_delete=models.CASCADE,
-        related_name="subscribers"
+        settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="subscribers"
     )
     email = models.EmailField(verbose_name="Почта", unique=True)
     fullname = models.CharField(max_length=150, verbose_name="Ф.И.О.")
@@ -54,9 +52,7 @@ class Mailing(models.Model):
         ("finished", "Завершена"),
     ]
     owner = models.ForeignKey(
-        settings.AUTH_USER_MODEL,
-        on_delete=models.CASCADE,
-        related_name="mailings"
+        settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="mailings"
     )
     start_time = models.DateTimeField(verbose_name="Дата начала рассылки")
     end_time = models.DateTimeField(
@@ -84,9 +80,7 @@ class Mailing(models.Model):
         ordering = [
             "status",
         ]
-        permissions = [
-            ("can_view_statistics", "Can view statistics")
-        ]
+        permissions = [("can_view_statistics", "Can view statistics")]
 
     def __str__(self):
         return f"{self.message.subject} - ({self.status})"
