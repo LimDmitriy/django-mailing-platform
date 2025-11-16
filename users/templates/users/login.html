@@ -1,0 +1,52 @@
+{% extends "mailings/base.html" %}
+{% load static %}
+{% load socialaccount %}
+{% load i18n %}
+
+{% block page_title %}Вход{% endblock %}
+{% block page_description %}Авторизация в системе{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-6 col-lg-4">
+
+        <div class="card shadow-sm">
+            <div class="card-body">
+                <h3 class="text-center mb-4">Вход</h3>
+
+                <form method="post" action="{% url 'account_login' %}">
+                    {% csrf_token %}
+                    {{ form.non_field_errors }}
+
+                    <div class="mb-3">
+                        <label>Email</label>
+                        {{ form.login }}
+                    </div>
+
+                    <div class="mb-3">
+                        <label>Пароль</label>
+                        {{ form.password }}
+                    </div>
+
+                    <div class="mb-3 form-check">
+                        {{ form.remember }}
+                        <label class="form-check-label">Запомнить меня</label>
+                    </div>
+
+                    <button class="btn btn-primary w-100" type="submit">Войти</button>
+
+                    <div class="text-center mt-3">
+                        <a href="{% url 'account_reset_password' %}">Забыли пароль?</a>
+                    </div>
+                </form>
+
+                <p class="text-center mt-4">
+                    Нет аккаунта?
+                    <a href="{% url 'account_signup' %}">Регистрация</a>
+                </p>
+            </div>
+        </div>
+
+    </div>
+</div>
+{% endblock %}

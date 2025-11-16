@@ -1,0 +1,34 @@
+{% extends "mailings/base.html" %}
+
+{% block page_title %}Подтверждение email{% endblock %}
+{% block page_description %}Подтвердите ваш email для завершения регистрации{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-6 col-lg-4">
+
+        <div class="card shadow-sm">
+            <div class="card-body text-center">
+
+                <h3 class="mb-3">Подтверждение email</h3>
+
+                {% if confirmation %}
+                    <p>Подтвердить email <strong>{{ confirmation.email_address.email }}</strong>?</p>
+
+                    <form method="post">
+                        {% csrf_token %}
+                        <button class="btn btn-success w-100">Подтвердить</button>
+                    </form>
+
+                {% else %}
+                    <div class="alert alert-danger">
+                        Неверная или устаревшая ссылка.
+                    </div>
+                {% endif %}
+
+            </div>
+        </div>
+
+    </div>
+</div>
+{% endblock %}

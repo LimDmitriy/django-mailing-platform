@@ -48,36 +48,50 @@
 
 
     <header>
-        <nav class="navbar navbar-expand-lg navbar-dark py-3">
-            <div class="container">
-                <a class="navbar-brand fw-bold" href="{% url 'mailings:home' %}">Mailing Service</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
-                        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="navbarNav">
-                    <ul class="navbar-nav ms-auto">
+    <nav class="navbar navbar-expand-lg navbar-dark py-3">
+        <div class="container">
+            <a class="navbar-brand fw-bold" href="{% url 'mailings:home' %}">Mailing Service</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link {% if request.resolver_match.url_name == 'home' %}active{% endif %}"
+                           href="{% url 'mailings:home' %}">Главная</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {% if request.resolver_match.url_name == 'subscriber_list' %}active{% endif %}"
+                           href="{% url 'mailings:subscriber_list' %}">Подписчики</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {% if request.resolver_match.url_name == 'mailing_list' %}active{% endif %}"
+                           href="{% url 'mailings:mailing_list' %}">Рассылки</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {% if request.resolver_match.url_name == 'message_list' %}active{% endif %}"
+                           href="{% url 'mailings:message_list' %}">Сообщения</a>
+                    </li>
+
+                    {% if user.is_authenticated %}
                         <li class="nav-item">
-                            <a class="nav-link {% if request.resolver_match.url_name == 'home' %}active{% endif %}"
-                               href="{% url 'mailings:home' %}">Главная</a>
+                            <a class="nav-link" href="{% url 'account_logout' %}">Выйти</a>
+                        </li>
+                    {% else %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'account_login' %}">Вход</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link {% if request.resolver_match.url_name == 'subscriber_list' %}active{% endif %}"
-                               href="{% url 'mailings:subscriber_list' %}">Подписчики</a>
+                            <a class="nav-link" href="{% url 'account_signup' %}">Регистрация</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link {% if request.resolver_match.url_name == 'mailing_list' %}active{% endif %}"
-                               href="{% url 'mailings:mailing_list' %}">Рассылки</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link {% if request.resolver_match.url_name == 'message_list' %}active{% endif %}"
-                               href="{% url 'mailings:message_list' %}">Сообщения</a>
-                        </li>
-                    </ul>
-                </div>
+                    {% endif %}
+                </ul>
             </div>
-        </nav>
-    </header>
+        </div>
+    </nav>
+</header>
+
 
     <main class="flex-fill">
         <section class="py-5 text-center container">

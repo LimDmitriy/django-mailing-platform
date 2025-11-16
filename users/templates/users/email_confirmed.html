@@ -1,0 +1,21 @@
+{% extends "mailings/base.html" %}
+
+{% block page_title %}Email подтверждён{% endblock %}
+{% block page_description %}Ваш email успешно подтверждён{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-6 col-lg-4">
+
+        <div class="alert alert-success text-center shadow-sm">
+            <h4 class="mb-2">Email подтвержден!</h4>
+            <p>Спасибо! Теперь вы можете войти.</p>
+        </div>
+
+        <div class="text-center">
+            <a href="{% url 'account_login' %}" class="btn btn-primary">Войти</a>
+        </div>
+
+    </div>
+</div>
+{% endblock %}

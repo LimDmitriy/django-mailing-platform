@@ -1,0 +1,44 @@
+{% extends "mailings/base.html" %}
+
+{% block page_title %}Регистрация{% endblock %}
+{% block page_description %}Создайте аккаунт{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-6 col-lg-4">
+        <div class="card shadow-sm">
+            <div class="card-body">
+
+                <h3 class="text-center mb-4">Регистрация</h3>
+
+                <form method="post" action="{% url 'account_signup' %}">
+                    {% csrf_token %}
+                    {{ form.non_field_errors }}
+
+                    <div class="mb-3">
+                        <label>Email</label>
+                        {{ form.email }}
+                    </div>
+
+                    <div class="mb-3">
+                        <label>Пароль</label>
+                        {{ form.password1 }}
+                    </div>
+
+                    <div class="mb-3">
+                        <label>Повторите пароль</label>
+                        {{ form.password2 }}
+                    </div>
+
+                    <button class="btn btn-success w-100" type="submit">Создать аккаунт</button>
+                </form>
+
+                <p class="text-center mt-4">
+                    Уже есть аккаунт?
+                    <a href="{% url 'account_login' %}">Войти</a>
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
