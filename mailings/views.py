@@ -4,7 +4,8 @@ from django.urls import reverse_lazy
 from .services import send_email
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
-
+from django.utils.decorators import method_decorator
+from django.views.decorators.cache import cache_page
 from .models import Subscriber, Message, Mailing
 from django.views.generic import (
     ListView,
@@ -15,6 +16,7 @@ from django.views.generic import (
 )
 
 
+@method_decorator(cache_page(60 * 5), name="dispatch")
 class HomeView(ListView):
     model = Mailing
     template_name = "mailings/home.html"
@@ -30,6 +32,7 @@ class HomeView(ListView):
         return context
 
 
+@method_decorator(cache_page(60 * 5), name="dispatch")
 class SubscriberListView(LoginRequiredMixin, ListView):
     model = Subscriber
     template_name = "mailings/subscribers_list.html"
@@ -71,6 +74,7 @@ class SubscriberDeleteView(LoginRequiredMixin, DeleteView):
     success_url = reverse_lazy("mailings:subscriber_list")
 
 
+@method_decorator(cache_page(60 * 5), name="dispatch")
 class MessageListView(LoginRequiredMixin, ListView):
     model = Message
     template_name = "mailings/message_list.html"
@@ -124,6 +128,7 @@ class MessageDeleteView(LoginRequiredMixin, DeleteView):
     success_url = reverse_lazy("mailings:message_list")
 
 
+@method_decorator(cache_page(60 * 5), name="dispatch")
 class MailingListView(LoginRequiredMixin, ListView):
     model = Mailing
     template_name = "mailings/mailing_list.html"
@@ -156,6 +161,7 @@ class MailingDetailView(LoginRequiredMixin, DetailView):
             return Mailing.objects.all()
         return Mailing.objects.filter(owner=self.request.user)
 
+
 class MailingUpdateView(LoginRequiredMixin, UpdateView):
     model = Mailing
     fields = ("start_time", "end_time", "message", "subscribers")
@@ -178,6 +184,8 @@ class MailingDeleteView(LoginRequiredMixin, DeleteView):
             return Mailing.objects.all()
         return Mailing.objects.filter(owner=self.request.user)
 
+
+@method_decorator(cache_page(60 * 5), name="dispatch")
 class MailingStatsView(LoginRequiredMixin, ListView):
     model = Mailing
     template_name = "mailings/user_mailings_stats.html"
@@ -192,16 +200,18 @@ class MailingStatsView(LoginRequiredMixin, ListView):
 
         stats_list = []
         for mailing in context["mailings"]:
-            stats_list.append({
-                "mailing": mailing,
-                "success": mailing.delivery_statuses.filter(status="success").count(),
-                "failed": mailing.delivery_statuses.filter(status="failed").count(),
-            })
+            stats_list.append(
+                {
+                    "mailing": mailing,
+                    "success": mailing.delivery_statuses.filter(
+                        status="success"
+                    ).count(),
+                    "failed": mailing.delivery_statuses.filter(status="failed").count(),
+                }
+            )
 
         context["stats"] = stats_list
         return context
-
-
 
 
 def send_mail_view(request, pk):
@@ -209,5 +219,3 @@ def send_mail_view(request, pk):
     send_email(mailing)
     messages.success(request, "Рассылка отправлена")
     return redirect("mailings:mailing_list")
-
-
