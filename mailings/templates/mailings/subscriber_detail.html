@@ -1,0 +1,30 @@
+{% extends 'mailings/base.html' %}
+
+{% block page_title %}Подписчик{% endblock %}
+{% block page_description %}Информация о подписчике{% endblock %}
+
+{% block content %}
+<div class="album py-5 bg-light">
+    <div class="container d-flex justify-content-center">
+        <div class="row" style="max-width: 800px; width: 100%;">
+            <div class="col">
+                <div class="card shadow-sm">
+                    <div class="card-body">
+                        <h3 class="card-title text-center">{{ subscriber.fullname }}</h3>
+                        <p class="card-text"><strong>Email:</strong> {{ subscriber.email }}</p>
+                        <p class="card-text"><strong>Комментарий:</strong> {{ subscriber.comment }}</p>
+                        <div class="d-flex justify-content-between align-items-center mt-3">
+                            <div class="btn-group">
+                                <a class="btn btn-primary" href="{% url 'mailings:subscriber_list' %}" role="button">Назад</a>
+                                <a class="btn btn-secondary" href="{% url 'mailings:subscriber_update' subscriber.pk %}" role="button">Редактировать</a>
+                                <a class="btn btn-danger" href="{% url 'mailings:subscriber_delete' subscriber.pk %}" role="button">Удалить</a>
+                            </div>
+                            <small class="text-muted">ID: {{ subscriber.pk }}</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

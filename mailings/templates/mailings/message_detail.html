@@ -1,0 +1,29 @@
+{% extends 'mailings/base.html' %}
+
+{% block page_title %}Сообщение{% endblock %}
+{% block page_description %}Информация о сообщении{% endblock %}
+
+{% block content %}
+<div class="album py-5 bg-light">
+    <div class="container d-flex justify-content-center">
+        <div class="row" style="max-width: 800px; width: 100%;">
+            <div class="col">
+                <div class="card shadow-sm">
+                    <div class="card-body">
+                        <h3 class="card-title text-center">{{ message.subject }}</h3>
+                        <p class="card-text"><strong>Massage:</strong> {{ message.content }}</p>
+                        <div class="d-flex justify-content-between align-items-center mt-3">
+                            <div class="btn-group">
+                                <a class="btn btn-primary" href="{% url 'mailings:message_list' %}" role="button">Назад</a>
+                                <a class="btn btn-secondary" href="{% url 'mailings:message_update' message.pk %}" role="button">Редактировать</a>
+                                <a class="btn btn-danger" href="{% url 'mailings:message_delete' message.pk %}" role="button">Удалить</a>
+                            </div>
+                            <small class="text-muted">ID: {{ message.pk }}</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

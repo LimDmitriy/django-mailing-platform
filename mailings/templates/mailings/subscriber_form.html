@@ -1,0 +1,45 @@
+{% extends 'mailings/base.html' %}
+
+{% block page_title %}{% if object %}Редактировать{% else %}Создать{% endif %} подписчика{% endblock %}
+{% block page_description %}Управляйте вашими подписчиками легко{% endblock %}
+
+{% block content %}
+<div class="container my-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-6 col-md-8">
+            <div class="card shadow border-0 rounded-3">
+                <div class="card-header bg-primary text-white text-center">
+                    <h4 class="mb-0">{% if object %}Редактировать{% else %}Создать{% endif %} подписчика</h4>
+                </div>
+                <div class="card-body">
+                    <form method="post">
+                        {% csrf_token %}
+
+                        <div class="mb-3">
+                            {{ form.email.label_tag }}
+                            {{ form.email }}
+                        </div>
+
+                        <div class="mb-3">
+                            {{ form.fullname.label_tag }}
+                            {{ form.fullname }}
+                        </div>
+
+                        <div class="mb-3">
+                            {{ form.comment.label_tag }}
+                            {{ form.comment }}
+                        </div>
+
+                        <div class="d-flex justify-content-between mt-4">
+                            <button type="submit" class="btn btn-primary w-50">
+                                {% if object %}Сохранить{% else %}Создать{% endif %}
+                            </button>
+                            <a href="{% url 'mailings:subscriber_list' %}" class="btn btn-outline-secondary w-50 ms-2">Отмена</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

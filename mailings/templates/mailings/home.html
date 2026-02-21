@@ -1,0 +1,63 @@
+{% extends 'mailings/base.html' %}
+{% load static %}
+
+{% block page_title %}Главная страница{% endblock %}
+{% block page_description %}Список всех активных рассылок{% endblock %}
+
+{% block content %}
+
+<div class="container my-4">
+  <div class="row text-center mb-4">
+    <div class="col">
+      <div class="card shadow-sm p-3">
+        <h5>Всего рассылок</h5>
+        <p class="fs-4">{{ total_mailings }}</p>
+      </div>
+    </div>
+    <div class="col">
+      <div class="card shadow-sm p-3">
+        <h5>Активные рассылки</h5>
+        <p class="fs-4">{{ active_mailings }}</p>
+      </div>
+    </div>
+    <div class="col">
+      <div class="card shadow-sm p-3">
+        <h5>Уникальные получатели</h5>
+        <p class="fs-4">{{ unique_subscribers }}</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% if object_list %}
+<div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+  {% for mailing in object_list %}
+  <div class="col">
+    <div class="card h-100 shadow-sm border-0 rounded-3">
+      <div class="card-body d-flex flex-column">
+        <h5 class="card-title text-primary">{{ mailing.message.subject }}</h5>
+        <p class="card-text text-muted">Статус: {{ mailing.status }}</p>
+        <div class="mt-auto d-flex justify-content-between align-items-center pt-3 border-top">
+          <a href="{% url 'mailings:mailing_detail' mailing.pk %}" class="btn btn-outline-primary btn-sm">
+            <i class="bi bi-eye"></i> Смотреть
+          </a>
+          <a href="{% url 'mailings:mailing_update' mailing.pk %}" class="btn btn-outline-warning btn-sm">
+            <i class="bi bi-pencil"></i> Изменить
+          </a>
+          <a href="{% url 'mailings:mailing_delete' mailing.pk %}" class="btn btn-outline-danger btn-sm">
+            <i class="bi bi-trash"></i> Удалить
+          </a>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+  {% endfor %}
+</div>
+{% else %}
+<div class="alert alert-info text-center mt-4">
+  Пока нет ни одной активной рассылки.
+</div>
+{% endif %}
+
+{% endblock %}

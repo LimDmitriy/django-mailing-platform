@@ -1,0 +1,48 @@
+{% extends 'mailings/base.html' %}
+{% load static %}
+
+{% block page_title %}Список сообщений{% endblock %}
+{% block page_description %}Управляйте вашими сообщениями — добавляйте, редактируйте и удаляйте{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+
+  <div class="text-center mb-4">
+    <a class="btn btn-primary btn-lg" href="{% url 'mailings:message_create' %}">
+      <i class="bi bi-person-plus"></i> Добавить сообщение
+    </a>
+  </div>
+
+  {% if object_list %}
+  <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+    {% for message in object_list %}
+    <div class="col">
+      <div class="card h-100 shadow-sm border-0 rounded-3">
+        <div class="card-body d-flex flex-column">
+          <h5 class="card-title text-primary">{{ message.subject }}</h5>
+          <p class="card-text text-muted">{{ message.content }}</p>
+          <div class="mt-auto d-flex justify-content-between align-items-center pt-3 border-top">
+            <a href="{% url 'mailings:message_detail' message.pk %}" class="btn btn-outline-primary btn-sm">
+              <i class="bi bi-eye"></i> Смотреть
+            </a>
+            <a href="{% url 'mailings:message_update' message.pk %}" class="btn btn-outline-warning btn-sm">
+              <i class="bi bi-pencil"></i> Изменить
+            </a>
+            <a href="{% url 'mailings:message_delete' message.pk %}" class="btn btn-outline-danger btn-sm">
+              <i class="bi bi-trash"></i> Удалить
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+
+  {% else %}
+  <div class="alert alert-info text-center mt-4">
+    Пока нет ни одного сообщения. Добавьте первое!
+  </div>
+  {% endif %}
+
+</div>
+{% endblock %}
